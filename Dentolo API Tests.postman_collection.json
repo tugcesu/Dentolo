@@ -1,0 +1,1267 @@
+{
+	"info": {
+		"_postman_id": "8594613a-7c8e-40d4-bba2-666b6146cf94",
+		"name": "Dentolo API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "postSuccessfulLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Status message is OK\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 500ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and status is success\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"success\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongBodyTypeHTML",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Status message is Internal Server Error\", function () {",
+							"    pm.response.to.have.status(\"Internal Server Error\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for wrong(HTML) body type\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{dentoloApiKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "html"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmptyHeaderKeyRightHeaderValue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Status message is Forbidden\", function () {",
+							"    pm.response.to.have.status(\"Forbidden\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"String Response for empty header key and right header value\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Access Denied\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"type": "text",
+						"value": "{{dentoloApiKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongHeaderKeyRightHeaderValue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Status message is Forbidden\", function () {",
+							"    pm.response.to.have.status(\"Forbidden\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"String Response for wrong header key and right header value\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Access Denied\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Do-Not-Track",
+						"type": "text",
+						"value": "{{dentoloApiKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmptyHeaderKeyAndValue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Status message is Forbidden\", function () {",
+							"    pm.response.to.have.status(\"Forbidden\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"String Response for empty header key and value\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Access Denied\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "275082ed-7dd0-4701-bfc4-86144adb313e",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongHeaderValueRightKey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Status message is Forbidden\", function () {",
+							"    pm.response.to.have.status(\"Forbidden\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"String Response for wrong header value and right key\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Access Denied\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "Test"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmptyHeaderValueRightKey",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"    pm.response.to.have.status(403);",
+							"});",
+							"",
+							"pm.test(\"Status message is Forbidden\", function () {",
+							"    pm.response.to.have.status(\"Forbidden\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"String Response for empty header value and right key\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Access Denied\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postMissingEndpoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for missing endpoint\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongEndpoint",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for wrong endpoint\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract123456",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract123456"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongMethod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and error is not-found\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error).to.eql(\"not-found\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postMissingEmailParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Status message is Internal Server Error\", function () {",
+							"    pm.response.to.have.status(\"Internal Server Error\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for missing email parameter\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postMissingContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and status is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postNotProperRequestBody",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});",
+							"",
+							"pm.test(\"Status message is Bad Request\", function () {",
+							"    pm.response.to.have.status(\"Bad Request\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for not proper request body\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"type": "text",
+						"value": "{{dentoloApiKey}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": tugce.suberk@gmail.com,\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmptyBody",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Status message is Internal Server Error\", function () {",
+							"    pm.response.to.have.status(\"Internal Server Error\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for empty body\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongEmailRightContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and status is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@com\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postRightEmailWrongContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and status is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"V\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postWrongEmailWrongContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and status is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@com\",\n\"contract_key\": \"V98\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmptyEmailRightContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Status message is Internal Server Error\", function () {",
+							"    pm.response.to.have.status(\"Internal Server Error\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for empty email parameter and right contract_key\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"\",\n\"contract_key\": \"V9839760296\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postRightEmailEmptyContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Status message is Not Found\", function () {",
+							"    pm.response.to.have.status(\"Not Found\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Response is JSON and status is fail\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.status).to.eql(\"fail\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"tugce.suberk@gmail.com\",\n\"contract_key\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postEmptyEmailEmptyContract_KeyParameter",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							"",
+							"pm.test(\"Status message is Internal Server Error\", function () {",
+							"    pm.response.to.have.status(\"Internal Server Error\");",
+							"});",
+							"",
+							"pm.test(\"Content-Type is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\");",
+							"});",
+							"",
+							"pm.test(\"Empty response for empty email and empty contract_key\", () => {",
+							"pm.expect(pm.response.text()).to.eql('')",
+							"",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "{{dentoloApiKey}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"email\": \"\",\n\"contract_key\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/petolo/v1/fressnapf/validate_contract",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"petolo",
+						"v1",
+						"fressnapf",
+						"validate_contract"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
